@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const favicon = require("serve-favicon");
@@ -9,6 +10,8 @@ const mongoose = require("mongoose");
 const index = require("./routes/index");
 
 const app = express();
+
+mongoose.connect(process.env.MONGODB_URI);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -23,8 +26,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", index);
-
-mongoose.connect("mongodb://localhost/lab-express-file-upload");
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
